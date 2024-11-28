@@ -244,23 +244,79 @@ closeChat.addEventListener('click', () => {
   chatBox.style.display = 'none';
 });
 
-// Send message
+// Send message and get AI reply
 sendMessage.addEventListener('click', () => {
   const message = chatInput.value.trim();
   if (message) {
-    const messageElem = document.createElement('div');
-    messageElem.textContent = message;
-    messageElem.style.margin = '5px 0';
-    messageElem.style.padding = '10px';
-    messageElem.style.backgroundColor = '#0078d7';
-    messageElem.style.color = 'white';
-    messageElem.style.borderRadius = '5px';
-    messageElem.style.alignSelf = 'flex-end';
-    chatMessages.appendChild(messageElem);
+    displayUserMessage(message);
     chatInput.value = '';
     chatMessages.scrollTop = chatMessages.scrollHeight;
+    setTimeout(() => {
+      displayAIResponse(message);
+    }, 1000); // Simulate AI response delay
   }
 });
+
+// Display user message
+function displayUserMessage(message) {
+  const messageElem = document.createElement('div');
+  messageElem.textContent = message;
+  messageElem.style.margin = '5px 0';
+  messageElem.style.padding = '10px';
+  messageElem.style.backgroundColor = '#0078d7';
+  messageElem.style.color = 'white';
+  messageElem.style.borderRadius = '5px';
+  messageElem.style.alignSelf = 'flex-end';
+  chatMessages.appendChild(messageElem);
+}
+
+// Display AI response
+function displayAIResponse(userMessage) {
+  const aiResponse = generateAIResponse(userMessage);
+  const messageElem = document.createElement('div');
+  messageElem.textContent = aiResponse;
+  messageElem.style.margin = '5px 0';
+  messageElem.style.padding = '10px';
+  messageElem.style.backgroundColor = '#ddd';
+  messageElem.style.color = 'black';
+  messageElem.style.borderRadius = '5px';
+  messageElem.style.alignSelf = 'flex-start';
+  chatMessages.appendChild(messageElem);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Generate AI response based on user message
+function generateAIResponse(userMessage) {
+  const lowerCaseMessage = userMessage.toLowerCase();
+
+  // Responses to specific questions
+  if (lowerCaseMessage.includes('hello')) {
+    return 'Hi there! How can I assist you today? 😊';
+  } else if (lowerCaseMessage.includes('how are you')) {
+    return 'I’m just a program, but I’m feeling great! How about you?';
+  } else if (lowerCaseMessage.includes('help')) {
+    return 'Sure, let me know what you need help with!';
+  } else if (lowerCaseMessage.includes('bye')) {
+    return 'Goodbye! Feel free to chat with me anytime. 👋';
+  } else if (lowerCaseMessage.includes('what is your name')) {
+    return 'I’m your friendly assistant! You can call me AI Bot. 😊';
+  } else if (lowerCaseMessage.includes('what can you do')) {
+    return 'I can chat with you, answer questions, and assist with tasks. Try asking me something!';
+  } else if (lowerCaseMessage.includes('where are you from')) {
+    return 'I exist in the digital world! 🌐';
+  } else if (lowerCaseMessage.includes('what time is it')) {
+    return `It's ${new Date().toLocaleTimeString()} right now.`;
+  } else if (lowerCaseMessage.includes('date today')) {
+    return `Today's date is ${new Date().toLocaleDateString()}.`;
+  } else if (lowerCaseMessage.includes('joke')) {
+    return 'Why don’t scientists trust atoms? Because they make up everything! 😄';
+  } else if (lowerCaseMessage.includes('what is love')) {
+    return 'Love is a complex mix of emotions, connections, and care for others. ❤️';
+  }
+
+  // Default fallback response for unknown questions
+  return 'That’s an interesting question! Could you tell me more? 😊';
+}
 
 // Draggable chat head
 chatHead.addEventListener('mousedown', (e) => {
@@ -285,3 +341,4 @@ chatHead.addEventListener('mousedown', (e) => {
 });
 
 chatHead.ondragstart = () => false;
+
