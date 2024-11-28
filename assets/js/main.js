@@ -234,7 +234,7 @@ const closeChat = document.getElementById('close-chat');
 const sendMessage = document.getElementById('send-message');
 const chatInput = document.getElementById('chat-input');
 const chatMessages = document.getElementById('chat-messages');
-const categorySelect = document.getElementById('category-select');
+const API_KEY = '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'; // Replace with your OpenAI API key
 
 // Toggle chat box
 chatHead.addEventListener('click', () => {
@@ -253,7 +253,7 @@ sendMessage.addEventListener('click', () => {
     chatInput.value = '';
     chatMessages.scrollTop = chatMessages.scrollHeight;
     setTimeout(() => {
-      displayAIResponse(message);
+      getAIResponse(message); // Get AI response
     }, 1000); // Simulate AI response delay
   }
 });
@@ -272,10 +272,9 @@ function displayUserMessage(message) {
 }
 
 // Display AI response
-function displayAIResponse(userMessage) {
-  const aiResponse = generateAIResponse(userMessage);
+function displayAIResponse(response) {
   const messageElem = document.createElement('div');
-  messageElem.textContent = aiResponse;
+  messageElem.textContent = response;
   messageElem.style.margin = '5px 0';
   messageElem.style.padding = '10px';
   messageElem.style.backgroundColor = '#ddd';
@@ -286,67 +285,28 @@ function displayAIResponse(userMessage) {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// Get selected category
-function getSelectedCategory() {
-  return categorySelect.value;
+// Function to call OpenAI API and get response
+async function getAIResponse(userMessage) {
+  const response = await fetch('https://api.openai.com/v1/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      model: "text-davinci-003", // You can replace this with other models like gpt-3.5-turbo, etc.
+      prompt: userMessage,
+      max_tokens: 100,
+      temperature: 0.7
+    })
+  });
+
+  const data = await response.json();
+  const aiResponse = data.choices[0].text.trim();
+  displayAIResponse(aiResponse); // Display AI's response in the chat
 }
 
-// Generate AI response based on user message and selected category
-function generateAIResponse(userMessage) {
-  const lowerCaseMessage = userMessage.toLowerCase();
-  const selectedCategory = getSelectedCategory();
-
-  // Responses for programming-related queries
-  const programmingResponses = {
-    'python': 'Python is a high-level programming language, known for its readability and ease of use.',
-    'java': 'Java is a widely-used programming language for building enterprise-level applications.',
-    'html': 'HTML is the standard markup language for creating web pages.',
-    'css': 'CSS is used to style web pages.',
-    'javascript': 'JavaScript is a scripting language used to create interactive effects on websites.',
-    'sql': 'SQL stands for Structured Query Language, used for managing data in relational databases.',
-  };
-
-  // Responses for web design-related queries
-  const webDesignResponses = {
-    'web design': 'Web design is the process of creating websites with a focus on layout and functionality.',
-    'html': 'HTML is the standard markup language for creating web pages.',
-    'css': 'CSS is used to style web pages.',
-    'responsive design': 'Responsive web design ensures that websites work on any device, big or small.',
-  };
-
-  // Responses for life-related queries
-  const lifeResponses = {
-    'life': 'Life is an amazing journey of growth, learning, and connection. Make the most of it!',
-    'happiness': 'Happiness is the state of mind that comes from within, often through gratitude and positivity.',
-    'success': 'Success is achieving goals, big or small, while staying true to your values.',
-  };
-
-  // Filter the response based on the selected category
-  if (selectedCategory === 'programming') {
-    for (let key in programmingResponses) {
-      if (lowerCaseMessage.includes(key)) {
-        return programmingResponses[key];
-      }
-    }
-  } else if (selectedCategory === 'web-design') {
-    for (let key in webDesignResponses) {
-      if (lowerCaseMessage.includes(key)) {
-        return webDesignResponses[key];
-      }
-    }
-  } else if (selectedCategory === 'life') {
-    for (let key in lifeResponses) {
-      if (lowerCaseMessage.includes(key)) {
-        return lifeResponses[key];
-      }
-    }
-  }
-
-  // Default response if no match is found
-  return 'I’m not sure about that. Could you please provide more details?';
-}
-
-// Draggable chat head
+// Draggable chat head (same as before)
 chatHead.addEventListener('mousedown', (e) => {
   let shiftX = e.clientX - chatHead.getBoundingClientRect().left;
   let shiftY = e.clientY - chatHead.getBoundingClientRect().top;
