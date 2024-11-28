@@ -234,6 +234,7 @@ const closeChat = document.getElementById('close-chat');
 const sendMessage = document.getElementById('send-message');
 const chatInput = document.getElementById('chat-input');
 const chatMessages = document.getElementById('chat-messages');
+const categorySelect = document.getElementById('category-select');
 
 // Toggle chat box
 chatHead.addEventListener('click', () => {
@@ -285,58 +286,64 @@ function displayAIResponse(userMessage) {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// Generate AI response based on user message
+// Get selected category
+function getSelectedCategory() {
+  return categorySelect.value;
+}
+
+// Generate AI response based on user message and selected category
 function generateAIResponse(userMessage) {
   const lowerCaseMessage = userMessage.toLowerCase();
+  const selectedCategory = getSelectedCategory();
 
-  // Predefined responses for specific keywords or phrases
-  const responses = {
+  // Responses for programming-related queries
+  const programmingResponses = {
     'python': 'Python is a high-level programming language, known for its readability and ease of use.',
     'java': 'Java is a widely-used programming language for building enterprise-level applications.',
     'html': 'HTML is the standard markup language for creating web pages.',
     'css': 'CSS is used to style web pages.',
     'javascript': 'JavaScript is a scripting language used to create interactive effects on websites.',
     'sql': 'SQL stands for Structured Query Language, used for managing data in relational databases.',
-    'data science': 'Data science involves analyzing and interpreting complex data to inform decisions.',
-    'ai': 'AI (Artificial Intelligence) is the simulation of human intelligence in machines.',
-    'web design': 'Web design is the process of creating websites with a focus on layout and functionality.',
-    'machine learning': 'Machine learning is a subset of AI that allows systems to learn from data without being explicitly programmed.',
-    'programming': 'Programming is the process of writing instructions for a computer to execute.',
   };
 
-  // Loop through responses and return an answer if the message contains any known keyword
-  for (let key in responses) {
-    if (lowerCaseMessage.includes(key)) {
-      return responses[key];
-    }
-  }
+  // Responses for web design-related queries
+  const webDesignResponses = {
+    'web design': 'Web design is the process of creating websites with a focus on layout and functionality.',
+    'html': 'HTML is the standard markup language for creating web pages.',
+    'css': 'CSS is used to style web pages.',
+    'responsive design': 'Responsive web design ensures that websites work on any device, big or small.',
+  };
 
-  // Additional responses to life-related questions
+  // Responses for life-related queries
   const lifeResponses = {
     'life': 'Life is an amazing journey of growth, learning, and connection. Make the most of it!',
     'happiness': 'Happiness is the state of mind that comes from within, often through gratitude and positivity.',
     'success': 'Success is achieving goals, big or small, while staying true to your values.',
-    'motivation': 'Motivation is the drive to pursue goals. Stay focused, stay inspired, and keep moving forward.',
-    'love': 'Love is a complex and deep emotional connection with someone or something that brings meaning to life.',
-    'purpose': 'Purpose is about knowing your reason for being, your true calling in life.',
-    'friends': 'Friends are those who support and care for you, enriching your life with shared experiences.',
-    'family': 'Family is the group of people who provide you with unconditional love and support.',
-    'balance': 'Life balance is about managing work, relationships, health, and personal growth harmoniously.',
-    'mindfulness': 'Mindfulness is being fully present and aware in the moment, without judgment.',
-    'health': 'Good health is essential to living a fulfilling life, both physically and mentally.',
-    'self-esteem': 'Self-esteem is the regard you have for yourself and your own abilities.',
-    'failure': 'Failure is not the opposite of success, but a step toward it. Learn, grow, and try again.',
   };
 
-  // Check for life-related questions
-  for (let key in lifeResponses) {
-    if (lowerCaseMessage.includes(key)) {
-      return lifeResponses[key];
+  // Filter the response based on the selected category
+  if (selectedCategory === 'programming') {
+    for (let key in programmingResponses) {
+      if (lowerCaseMessage.includes(key)) {
+        return programmingResponses[key];
+      }
+    }
+  } else if (selectedCategory === 'web-design') {
+    for (let key in webDesignResponses) {
+      if (lowerCaseMessage.includes(key)) {
+        return webDesignResponses[key];
+      }
+    }
+  } else if (selectedCategory === 'life') {
+    for (let key in lifeResponses) {
+      if (lowerCaseMessage.includes(key)) {
+        return lifeResponses[key];
+      }
     }
   }
 
-  // Default fallback response if the message doesn't match any keyword
-  return 'That’s an interesting question! Could you tell me more? 😊';
+  // Default response if no match is found
+  return 'I’m not sure about that. Could you please provide more details?';
 }
 
 // Draggable chat head
@@ -362,5 +369,6 @@ chatHead.addEventListener('mousedown', (e) => {
 });
 
 chatHead.ondragstart = () => false;
+
 
 
