@@ -198,9 +198,11 @@
 
   <script>
     AOS.init({
-      once: false, // Ensures animations trigger every time the element enters the viewport
-      duration: 800, // Adjust animation duration (optional)
-      offset: 120, // Adjust offset to trigger animation sooner or later
+      once: false,            // Re-trigger animations on scroll
+      duration: 2000,         // Lengthen the animation duration to 2 seconds
+      offset: 100,            // Trigger animation slightly before the element fully enters the viewport
+      easing: 'ease-in-out',  // Smooth transition with easing
+      delay: 200,             // Optional: Stagger animations if needed globally
     });
   </script>
   
