@@ -227,3 +227,61 @@
   document.addEventListener('scroll', navmenuScrollspy);
 
 })();
+
+const chatHead = document.getElementById('chat-head');
+const chatBox = document.getElementById('chat-box');
+const closeChat = document.getElementById('close-chat');
+const sendMessage = document.getElementById('send-message');
+const chatInput = document.getElementById('chat-input');
+const chatMessages = document.getElementById('chat-messages');
+
+// Toggle chat box
+chatHead.addEventListener('click', () => {
+  chatBox.style.display = chatBox.style.display === 'flex' ? 'none' : 'flex';
+});
+
+closeChat.addEventListener('click', () => {
+  chatBox.style.display = 'none';
+});
+
+// Send message
+sendMessage.addEventListener('click', () => {
+  const message = chatInput.value.trim();
+  if (message) {
+    const messageElem = document.createElement('div');
+    messageElem.textContent = message;
+    messageElem.style.margin = '5px 0';
+    messageElem.style.padding = '10px';
+    messageElem.style.backgroundColor = '#0078d7';
+    messageElem.style.color = 'white';
+    messageElem.style.borderRadius = '5px';
+    messageElem.style.alignSelf = 'flex-end';
+    chatMessages.appendChild(messageElem);
+    chatInput.value = '';
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+});
+
+// Draggable chat head
+chatHead.addEventListener('mousedown', (e) => {
+  let shiftX = e.clientX - chatHead.getBoundingClientRect().left;
+  let shiftY = e.clientY - chatHead.getBoundingClientRect().top;
+
+  function moveAt(pageX, pageY) {
+    chatHead.style.left = pageX - shiftX + 'px';
+    chatHead.style.top = pageY - shiftY + 'px';
+  }
+
+  function onMouseMove(event) {
+    moveAt(event.pageX, event.pageY);
+  }
+
+  document.addEventListener('mousemove', onMouseMove);
+
+  chatHead.onmouseup = () => {
+    document.removeEventListener('mousemove', onMouseMove);
+    chatHead.onmouseup = null;
+  };
+});
+
+chatHead.ondragstart = () => false;
