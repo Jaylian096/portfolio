@@ -687,32 +687,20 @@
 
   </main>
 
-  <div id="chat-head" class="chat-head">💬</div>
-<div id="chat-box" class="chat-box">
-  <div class="chat-header">
-    <span>Chat</span>
-    <button id="close-chat" class="close-btn">&times;</button>
+  <div id="chat-head" class="chat-head">
+    💬
   </div>
-  
-  <!-- Category selection dropdown -->
-  <div class="category-selector">
-    <label for="category-select">Choose a category: </label>
-    <select id="category-select">
-      <option value="all">All</option>
-      <option value="web-design">Web Designing</option>
-      <option value="programming">Programming</option>
-      <option value="life">Life</option>
-    </select>
+  <div id="chat-box" class="chat-box">
+    <div class="chat-header">
+      <span>Chat</span>
+      <button id="close-chat" class="close-btn">&times;</button>
+    </div>
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="chat-input">
+      <input type="text" id="chat-input" placeholder="Type a message..." />
+      <button id="send-message">Send</button>
+    </div>
   </div>
-
-  <div class="chat-messages" id="chat-messages"></div>
-  
-  <div class="chat-input">
-    <input type="text" id="chat-input" placeholder="Type a message..." />
-    <button id="send-message">Send</button>
-  </div>
-</div>
-
 
   <footer id="footer" class="footer position-relative light-background">
 
