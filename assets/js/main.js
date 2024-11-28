@@ -234,7 +234,7 @@ const closeChat = document.getElementById('close-chat');
 const sendMessage = document.getElementById('send-message');
 const chatInput = document.getElementById('chat-input');
 const chatMessages = document.getElementById('chat-messages');
-const API_KEY = ''; // Replace with your OpenAI API key
+const API_KEY = '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'; // Replace with your OpenAI API key
 
 // Toggle chat box
 chatHead.addEventListener('click', () => {
