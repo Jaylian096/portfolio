@@ -289,29 +289,49 @@ function displayAIResponse(userMessage) {
 function generateAIResponse(userMessage) {
   const lowerCaseMessage = userMessage.toLowerCase();
 
-  // Responses to specific questions
-  if (lowerCaseMessage.includes('hello')) {
-    return 'Hi there! How can I assist you today? 😊';
-  } else if (lowerCaseMessage.includes('how are you')) {
-    return 'I’m just a program, but I’m feeling great! How about you?';
-  } else if (lowerCaseMessage.includes('help')) {
-    return 'Sure, let me know what you need help with!';
-  } else if (lowerCaseMessage.includes('bye')) {
-    return 'Goodbye! Feel free to chat with me anytime. 👋';
-  } else if (lowerCaseMessage.includes('what is your name')) {
-    return 'I’m your friendly assistant! You can call me AI Bot. 😊';
-  } else if (lowerCaseMessage.includes('what can you do')) {
-    return 'I can chat with you, answer questions, and assist with tasks. Try asking me something!';
-  } else if (lowerCaseMessage.includes('where are you from')) {
-    return 'I exist in the digital world! 🌐';
-  } else if (lowerCaseMessage.includes('what time is it')) {
-    return `It's ${new Date().toLocaleTimeString()} right now.`;
-  } else if (lowerCaseMessage.includes('date today')) {
-    return `Today's date is ${new Date().toLocaleDateString()}.`;
-  } else if (lowerCaseMessage.includes('joke')) {
-    return 'Why don’t scientists trust atoms? Because they make up everything! 😄';
-  } else if (lowerCaseMessage.includes('what is love')) {
-    return 'Love is a complex mix of emotions, connections, and care for others. ❤️';
+  // Predefined responses for specific keywords or phrases
+  const responses = {
+    'hello': 'Hi there!',
+    'help': 'Sure, let me know what you need help with!',
+    'python': 'Python is a high-level programming language.',
+    'java': 'Java is a widely-used programming language for building enterprise-level applications.',
+    'html': 'HTML is the standard markup language for creating web pages.',
+    'css': 'CSS is used to style web pages.',
+    'javascript': 'JavaScript is a scripting language used to create interactive effects on websites.',
+    'sql': 'SQL stands for Structured Query Language, used for managing data in relational databases.',
+    'data science': 'Data science involves analyzing and interpreting complex data to inform decisions.',
+    'ai': 'AI (Artificial Intelligence) is the simulation of human intelligence in machines.',
+    'web design': 'Web design is the process of creating websites with a focus on layout and functionality.',
+    'machine learning': 'Machine learning is a subset of AI that allows systems to learn from data without being explicitly programmed.',
+    'programming': 'Programming is the process of writing instructions for a computer to execute.',
+    'life': 'Life is an amazing journey of growth, learning, and connection. Make the most of it!',
+    'happiness': 'Happiness is the state of mind that comes from within, often through gratitude and positivity.',
+    'success': 'Success is achieving goals, big or small, while staying true to your values.',
+    'motivation': 'Motivation is the drive to pursue goals. Stay focused, stay inspired, and keep moving forward.',
+    'love': 'Love is a complex and deep emotional connection with someone or something that brings meaning to life.',
+    'purpose': 'Purpose is about knowing your reason for being, your true calling in life.',
+    'friends': 'Friends are those who support and care for you, enriching your life with shared experiences.',
+    'family': 'Family is the group of people who provide you with unconditional love and support.',
+    'balance': 'Life balance is about managing work, relationships, health, and personal growth harmoniously.',
+    'mindfulness': 'Mindfulness is being fully present and aware in the moment, without judgment.',
+    'health': 'Good health is essential to living a fulfilling life, both physically and mentally.',
+    'career': 'A career is a long-term professional journey that often involves growth, learning, and advancement.',
+    'self-esteem': 'Self-esteem is the regard you have for yourself and your own abilities.',
+    'failure': 'Failure is not the opposite of success, but a step toward it. Learn, grow, and try again.',
+    'programming languages': 'Programming languages are the tools used to write code. Some common ones are Python, Java, and JavaScript.',
+    'motivation for life': 'Motivation for life comes from setting goals, staying focused, and remembering your purpose.',
+  };
+
+  // Check if the user's message matches any known keyword (for single-word responses)
+  for (let key in responses) {
+    if (lowerCaseMessage.includes(key)) {
+      return responses[key];
+    }
+  }
+
+  // Check if the user's message is a more complex question (longer phrases)
+  if (userMessage.includes('how') || userMessage.includes('what') || userMessage.includes('why')) {
+    return `That's a great question! Here's some information on ${userMessage}: You can learn more through tutorials, courses, and hands-on practice.`;
   }
 
   // Default fallback response for unknown questions
@@ -341,4 +361,5 @@ chatHead.addEventListener('mousedown', (e) => {
 });
 
 chatHead.ondragstart = () => false;
+
 
