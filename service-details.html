@@ -45,28 +45,28 @@
 
 <body class="service-details-page">
 
-  <header id="header" class="header dark-background d-flex flex-column">
-    <i class="header-toggle d-xl-none bi bi-list"></i>
+  <header id="header" class="header dark-background d-flex flex-column" data-aos="fade-down" data-aos-duration="1000">
+    <i class="header-toggle d-xl-none bi bi-list" data-aos="fade-right" data-aos-delay="200"></i>
 
-    <div class="profile-img">
+    <div class="profile-img" data-aos="zoom-in" data-aos-delay="300">
       <img src="assets/img/profile.jpg" alt="" class="img-fluid rounded-circle">
     </div>
 
-    <a href="index.html" class="logo d-flex align-items-center justify-content-center">
+    <a href="index.html" class="logo d-flex align-items-center justify-content-center" data-aos="fade-up" data-aos-delay="400">
       <!-- Uncomment the line below if you also wish to use an image logo -->
       <!-- <img src="assets/img/logo.png" alt=""> -->
       <h1 class="sitename">Jaylian C. Bacolod</h1>
     </a>
 
-    <div class="social-links text-center">
-      <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
-      <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-      <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-      <a href="#" class="google-plus"><i class="bi bi-skype"></i></a>
-      <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+    <div class="social-links text-center" data-aos="fade-left" data-aos-delay="500">
+      <a href="#" class="twitter" data-aos="fade-up" data-aos-delay="600"><i class="bi bi-twitter-x"></i></a>
+      <a href="#" class="facebook" data-aos="fade-up" data-aos-delay="700"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="instagram" data-aos="fade-up" data-aos-delay="800"><i class="bi bi-instagram"></i></a>
+      <a href="#" class="google-plus" data-aos="fade-up" data-aos-delay="900"><i class="bi bi-skype"></i></a>
+      <a href="#" class="linkedin" data-aos="fade-up" data-aos-delay="1000"><i class="bi bi-linkedin"></i></a>
     </div>
+</header>
 
-  </header>
 
   <main class="main">
 
@@ -108,7 +108,7 @@
         <img src="assets/img/service.jpg" alt="Service Details" class="img-fluid services-img">
         <h3>Innovative Solutions that Drive Results</h3>
         <p>
-          I believe in creating digital experiences that not only look great but also function flawlessly. From user interface design to back-end development, I integrate best practices to ensure your project stands out and performs at its best.
+          I believe in creating digital experiences that not only look great but also function flawlessly. From user interface design to front-end development, I integrate best practices to ensure your project stands out and performs at its best.
         </p>
         <ul>
           <li><i class="bi bi-check-circle"></i> <span>Expertly designed interfaces tailored to your audience's needs.</span></li>
@@ -138,14 +138,14 @@
 
     <div class="container">
       <div class="copyright text-center ">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">iPortfolio</strong> <span>All Rights Reserved</span></p>
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">My Portfolio</strong> <span>All Rights Reserved</span></p>
       </div>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
         <!-- You can delete the links only if you've purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        Designed by <a href="https://www.facebook.com/jaylian.bacolod.2024">Jaylian Bacolod</a>
       </div>
     </div>
 
@@ -171,6 +171,16 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+    AOS.init({
+      once: false,            // Re-trigger animations on scroll
+      duration: 2000,         // Lengthen the animation duration to 2 seconds
+      offset: 100,            // Trigger animation slightly before the element fully enters the viewport
+      easing: 'ease-in-out',  // Smooth transition with easing
+      delay: 200,             // Optional: Stagger animations if needed globally
+    });
+  </script>
+  
 
 </body>
 

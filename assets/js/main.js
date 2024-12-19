@@ -227,3 +227,108 @@
   document.addEventListener('scroll', navmenuScrollspy);
 
 })();
+
+const chatHead = document.getElementById('chat-head');
+const chatBox = document.getElementById('chat-box');
+const closeChat = document.getElementById('close-chat');
+const sendMessage = document.getElementById('send-message');
+const chatInput = document.getElementById('chat-input');
+const chatMessages = document.getElementById('chat-messages');
+const API_KEY = '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'; // Replace with your OpenAI API key
+
+// Toggle chat box
+chatHead.addEventListener('click', () => {
+  chatBox.style.display = chatBox.style.display === 'flex' ? 'none' : 'flex';
+});
+
+closeChat.addEventListener('click', () => {
+  chatBox.style.display = 'none';
+});
+
+// Send message and get AI reply
+sendMessage.addEventListener('click', () => {
+  const message = chatInput.value.trim();
+  if (message) {
+    displayUserMessage(message);
+    chatInput.value = '';
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    setTimeout(() => {
+      getAIResponse(message); // Get AI response
+    }, 1000); // Simulate AI response delay
+  }
+});
+
+// Display user message
+function displayUserMessage(message) {
+  const messageElem = document.createElement('div');
+  messageElem.textContent = message;
+  messageElem.style.margin = '5px 0';
+  messageElem.style.padding = '10px';
+  messageElem.style.backgroundColor = '#0078d7';
+  messageElem.style.color = 'white';
+  messageElem.style.borderRadius = '5px';
+  messageElem.style.alignSelf = 'flex-end';
+  chatMessages.appendChild(messageElem);
+}
+
+// Display AI response
+function displayAIResponse(response) {
+  const messageElem = document.createElement('div');
+  messageElem.textContent = response;
+  messageElem.style.margin = '5px 0';
+  messageElem.style.padding = '10px';
+  messageElem.style.backgroundColor = '#ddd';
+  messageElem.style.color = 'black';
+  messageElem.style.borderRadius = '5px';
+  messageElem.style.alignSelf = 'flex-start';
+  chatMessages.appendChild(messageElem);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Function to call OpenAI API and get response
+async function getAIResponse(userMessage) {
+  const response = await fetch('https://api.openai.com/v1/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      model: "text-davinci-003", // You can replace this with other models like gpt-3.5-turbo, etc.
+      prompt: userMessage,
+      max_tokens: 100,
+      temperature: 0.7
+    })
+  });
+
+  const data = await response.json();
+  const aiResponse = data.choices[0].text.trim();
+  displayAIResponse(aiResponse); // Display AI's response in the chat
+}
+
+// Draggable chat head (same as before)
+chatHead.addEventListener('mousedown', (e) => {
+  let shiftX = e.clientX - chatHead.getBoundingClientRect().left;
+  let shiftY = e.clientY - chatHead.getBoundingClientRect().top;
+
+  function moveAt(pageX, pageY) {
+    chatHead.style.left = pageX - shiftX + 'px';
+    chatHead.style.top = pageY - shiftY + 'px';
+  }
+
+  function onMouseMove(event) {
+    moveAt(event.pageX, event.pageY);
+  }
+
+  document.addEventListener('mousemove', onMouseMove);
+
+  chatHead.onmouseup = () => {
+    document.removeEventListener('mousemove', onMouseMove);
+    chatHead.onmouseup = null;
+  };
+});
+
+chatHead.ondragstart = () => false;
+
+
+
